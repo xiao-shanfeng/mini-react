@@ -110,7 +110,20 @@ function render(el, container) {
 const textEl = createTextNode('app')
 const buttonEl = createButtonNode('button', null, '按钮')
 
+
+// render(App, document.querySelector('#root'))
+
+const React = {
+  createElemet(container) {
+    return {
+      render(App) {
+        render(App, container)
+      }
+    }
+  }
+}
+
+
 const App = createElemet('div', {id: 'id'}, 'hi ', 'mini-react', buttonEl)
 console.log(App)
-
-render(App, document.querySelector('#root'))
+React.createElemet(document.querySelector('#root')).render(App)
