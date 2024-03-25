@@ -60,70 +60,13 @@ dom.append(buttonDom) */
 
 
 
-function createTextNode(text) {
-  return {
-    type: 'TEXT_ELEMENT',
-    props: {
-      nodeValue: text,
-      children: []
-    }
-  }
-}
-
-function createButtonNode(type, props, text) {
-  return {
-    type,
-    props: {
-      ...props,
-      textContent: text,
-      children: []
-    }
-  }
-}
-
-function createElemet(type, props, ...children) {
-  return {
-    type,
-    props: {
-      ...props,
-      children: children.map(child => {
-        return typeof child === 'string' ? createTextNode(child) : child
-      })
-    }
-  }
-}
 
 
-function render(el, container) {
-  const dom = el.type === 'TEXT_ELEMENT' ? document.createTextNode('') : document.createElement(el.type)
-  Object.keys(el.props).forEach(key => {
-    if (key !== 'children') {
-      dom[key] = el.props[key]
-    }
-  })
-  const children = el.props.children
-  children.map(child => render(child, dom))
-  container.append(dom)
-}
-
-
-const textEl = createTextNode('app')
-const buttonEl = createButtonNode('button', null, '按钮')
 
 
 // render(App, document.querySelector('#root'))
 
-const React = {
-  createElemet(container) {
-    return {
-      render(App) {
-        render(App, container)
-      }
-    }
-  }
-}
+import ReactDom from './core/ReactDom.js'
+import App from './App.js'
 
-
-const App = createElemet('div', {id: 'id'}, 'hi ', 'mini-react', buttonEl)
-console.log(App)
-React.createElemet(document.querySelector('#root')).render(App)
+ReactDom.createElemet(document.querySelector('#root')).render(App)
